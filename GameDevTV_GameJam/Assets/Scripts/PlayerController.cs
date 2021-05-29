@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         if (movement.x != 0 || movement.y != 0)
         {
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-            cnRB.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+           // cnRB.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }
     }
     
