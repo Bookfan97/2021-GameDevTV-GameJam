@@ -446,6 +446,10 @@ PrefabInstance:
       propertyPath: borderSprites.Array.data[24]
       value: 
       objectReference: {fileID: 21300000, guid: 1be57a2f2de950145a9295b8322d7841, type: 3}
+    - target: {fileID: 2149453778997101799, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
+      propertyPath: islandPrefab
+      value: 
+      objectReference: {fileID: 3763641183122886903, guid: d0aec68b7c1449249a33e792e28de344, type: 3}
     - target: {fileID: 2974425019809946979, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_Name
       value: GenerateEnvironment

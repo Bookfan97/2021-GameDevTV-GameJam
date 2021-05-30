@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3763641183122886903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9125829365761477324}
+  - component: {fileID: 8557178496724637446}
+  - component: {fileID: 3725656634519052414}
+  m_Layer: 0
+  m_Name: Island
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9125829365761477324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763641183122886903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8557178496724637446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763641183122886903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5d6874671809441af78bae5dbf1a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  islandWidth: 2
+  islandHeight: 2
+  islandSpritePrefab: {fileID: 5639452147430563482, guid: ae69735c6044b404696007e4ba879e3d, type: 3}
+  floorSprite:
+  - {fileID: 21300000, guid: da58d4e94f05ce544922a7daabe643ff, type: 3}
+  - {fileID: 21300000, guid: 4d1f511a2c76dda4388cee77072d1905, type: 3}
+  - {fileID: 21300000, guid: 47f4dcdf3c90cde4e8d354eca3c2d0c5, type: 3}
+  - {fileID: 21300000, guid: 297080687c981c648aa7f82e4a3353de, type: 3}
+  bottomBorderSprite:
+  - {fileID: 21300000, guid: 8c9d666fce101e74abe08c5d27034bcf, type: 3}
+  - {fileID: 21300000, guid: 59f4c52d72312df4bb6d87e6ac733038, type: 3}
+  topBorderSprite:
+  - {fileID: 21300000, guid: 4a7edf1abf6b029418430a34fc15521b, type: 3}
+  - {fileID: 21300000, guid: f0743e9f6719fc84b8c93ff637c3be56, type: 3}
+  leftBorderSprite:
+  - {fileID: 21300000, guid: c0240a4cc3240c046adb307c8c66f7ef, type: 3}
+  - {fileID: 21300000, guid: 8f13ab7a934249249a38b477696f5dd7, type: 3}
+  rightBorderSprite:
+  - {fileID: 21300000, guid: 9c6418411df77ed4f880502b499ade8c, type: 3}
+  - {fileID: 21300000, guid: 8ba3f9a678fa02e4aac6eb7f5bed2c33, type: 3}
+  decorationBorderSprite:
+  - {fileID: 21300000, guid: d579a70ba30dd0941bd77e42d43b5bce, type: 3}
+  - {fileID: 21300000, guid: e64bb6ddfe6354645a2658d765c7e613, type: 3}
+  - {fileID: 21300000, guid: e21e984872267ca4582950e0fbf80f4d, type: 3}
+  URCornerSprite: {fileID: 21300000, guid: 9b9e1829c3a361c41a30316690d60530, type: 3}
+  BRCornerSprite: {fileID: 21300000, guid: 2a4974446868276419b5b2a90b1e884c, type: 3}
+  ULCornerSprite: {fileID: 21300000, guid: 98788f2a891b0834189ab05270348212, type: 3}
+  BLCornerSprite: {fileID: 21300000, guid: a8731211ccd3b584282fb6c900020e26, type: 3}
+--- !u!61 &3725656634519052414
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763641183122886903}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

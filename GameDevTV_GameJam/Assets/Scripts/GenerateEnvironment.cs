@@ -10,6 +10,7 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject waterTile;
     [SerializeField] private GameObject borderPrefab;
     [SerializeField] private Sprite[] borderSprites;
+    [SerializeField] private GameObject islandPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +19,8 @@ public class GenerateEnvironment : MonoBehaviour
         GenerateFloor();
         MovePlayer();
         GenerateBorder();
+        GenerateObjects();
     }
-    
 
     // Update is called once per frame
     void Update()
@@ -75,6 +76,32 @@ public class GenerateEnvironment : MonoBehaviour
             }
         }
     }
+
+    private void GenerateObjects()
+    {
+        int count = 0;
+        for (int x = 1; x < floorX - 1; x++)
+        {
+            for (int y = 1; y < floorY - 1; y++)
+            {
+                if (Random.Range(0, 1000) < 2)
+                {
+                    Debug.Log("Island #"+count+" at ("+x+", "+y+")");
+                    count++;
+                    InstantiateIsland(x,y);
+                }
+            }
+        }
+    }
+
+    private void InstantiateIsland(int x, int y)
+    {
+        GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity); 
+        //newIsland.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        newIsland.transform.parent = this.transform;
+        newIsland.transform.position = new Vector3(x, y, 0);
+    }
+
     private void InstantiateWaterTile(int x, int y)
     {
         GameObject newFloorTile = Instantiate(waterTile, new Vector2(x, y), Quaternion.identity); 
