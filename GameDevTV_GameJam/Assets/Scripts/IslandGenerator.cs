@@ -22,6 +22,7 @@ public class IslandGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.GetComponent<BoxCollider2D>().size = new Vector2(islandWidth, islandHeight + 2);
         GenerateBorder();
         GenerateFloor();
     }
@@ -45,7 +46,7 @@ public class IslandGenerator : MonoBehaviour
             {
                 InstantiateBorderDecorationTile(x, islandHeight, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 180);
             }
-            //else
+            else
             {
                 InstantiateSpriteTile(x, islandHeight, topBorderSprite[Random.Range(0, topBorderSprite.Length)]);
             }
