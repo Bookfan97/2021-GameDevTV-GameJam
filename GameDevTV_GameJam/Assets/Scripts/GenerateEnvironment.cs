@@ -11,9 +11,12 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject borderPrefab;
     [SerializeField] private Sprite[] borderSprites;
     [SerializeField] private GameObject islandPrefab;
+    
+    private List<GameObject> _islands;
     // Start is called before the first frame update
     void Start()
     {
+        _islands = new List<GameObject>();
         player = FindObjectOfType<PlayerController>().gameObject;
         RandomizeMap();
         GenerateFloor();
@@ -84,10 +87,17 @@ public class GenerateEnvironment : MonoBehaviour
         {
             for (int y = 1; y < floorY - 1; y++)
             {
-                if (Random.Range(0, 1000) < 2)
+                bool validPosition = true;
+                Collider[] colliders = Physics.OverlapSphere(new Vector3(x, y, 0), 10f);
+                foreach(Collider col in colliders)
                 {
-                    Debug.Log("Island #"+count+" at ("+x+", "+y+")");
-                    count++;
+                    if(col.tag == "Island")
+                    {
+                        validPosition = false;
+                    }
+                }
+                if (Random.Range(0, 1000) < 5 && validPosition)
+                {
                     InstantiateIsland(x,y);
                 }
             }
@@ -100,6 +110,7 @@ public class GenerateEnvironment : MonoBehaviour
         //newIsland.GetComponent<SpriteRenderer>().sortingOrder = 3;
         newIsland.transform.parent = this.transform;
         newIsland.transform.position = new Vector3(x, y, 0);
+        _islands.Add(newIsland);
     }
 
     private void InstantiateWaterTile(int x, int y)
@@ -113,7 +124,7 @@ public class GenerateEnvironment : MonoBehaviour
     {
         GameObject newBorderTile = Instantiate(borderPrefab, new Vector2(x, y), Quaternion.identity);
         newBorderTile.GetComponent<SpriteRenderer>().sprite = borderSprites[Random.Range(0, borderSprites.Length)];
-        newBorderTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        newBorderTile.GetComponent<SpriteRenderer>().sortingOrder = 11;
         newBorderTile.transform.parent = this.transform;
     }
     
