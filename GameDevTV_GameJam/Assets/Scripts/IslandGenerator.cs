@@ -22,7 +22,9 @@ public class IslandGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.GetComponent<BoxCollider2D>().size = new Vector2(islandWidth, islandHeight + 2);
+        var boxCollider2D = this.GetComponent<BoxCollider2D>();
+        boxCollider2D.size = new Vector2(islandWidth+2, islandHeight+2);
+        boxCollider2D.offset = new Vector2(0.5f,0.5f);
         GenerateBorder();
         GenerateFloor();
     }
