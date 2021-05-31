@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GenerateEnvironment : MonoBehaviour
 {
+    [SerializeField] private static int buffer = 10;
     [SerializeField] private GameObject player;
     [SerializeField] public int floorX = 20;
     [SerializeField] public int floorY = 20;
@@ -12,7 +13,7 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private Sprite[] borderSprites;
     [SerializeField] private GameObject islandPrefab;
     
-    private List<GameObject> _islands;
+    private static List<GameObject> _islands;
     // Start is called before the first frame update
     void Start()
     {
@@ -87,16 +88,7 @@ public class GenerateEnvironment : MonoBehaviour
         {
             for (int y = 1; y < floorY - 1; y++)
             {
-                bool validPosition = true;
-                Collider[] colliders = Physics.OverlapSphere(new Vector3(x, y, 0), 10f);
-                foreach(Collider col in colliders)
-                {
-                    if(col.tag == "Island")
-                    {
-                        validPosition = false;
-                    }
-                }
-                if (Random.Range(0, 1000) < 5 && validPosition)
+                if (Random.Range(0, 1000) < 5)
                 {
                     InstantiateIsland(x,y);
                 }
@@ -106,11 +98,44 @@ public class GenerateEnvironment : MonoBehaviour
 
     private void InstantiateIsland(int x, int y)
     {
-        GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity); 
-        //newIsland.GetComponent<SpriteRenderer>().sortingOrder = 3;
-        newIsland.transform.parent = this.transform;
-        newIsland.transform.position = new Vector3(x, y, 0);
-        _islands.Add(newIsland);
+        bool valid = CanSpawn(x, y);
+        if (valid)
+        {
+            GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity);
+            newIsland.transform.parent = this.transform;
+            newIsland.transform.position = new Vector3(x, y, 0);
+            BoxCollider2D col = newIsland.GetComponent<BoxCollider2D>();
+            //Physics2D.OverlapCollider(newIsland.GetComponent<BoxCollider>(), filter, results);
+            //Destroy(newIsland);
+            _islands.Add(newIsland);
+        }
+    }
+
+    private static bool CanSpawn(int x, int y)
+    {
+        
+        if (_islands.Count <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            foreach (var island in _islands)
+            {
+                IslandGenerator IG = island.GetComponent<IslandGenerator>();
+                if ((IG.islandCenterX - IG.islandWidth) + buffer < (x - IG.islandWidth) &&
+                    (x + IG.islandWidth) < (IG.islandCenterX + IG.islandWidth) + buffer)
+                {
+                    return false;
+                }
+                else if ((IG.islandCenterY - IG.islandHeight) + buffer < (y + IG.islandHeight) &&
+                         (y - IG.islandHeight) < (IG.islandCenterY + IG.islandHeight) + buffer)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void InstantiateWaterTile(int x, int y)

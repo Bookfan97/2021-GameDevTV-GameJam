@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class IslandGenerator : MonoBehaviour
 {
-    [SerializeField] private int islandWidth = 2;
-    [SerializeField] private int islandHeight = 2;
+    public float islandCenterX, islandCenterY;
+    [SerializeField] public int islandWidth = 2;
+    [SerializeField] public int islandHeight = 2;
     
     [SerializeField] private GameObject islandSpritePrefab;
     [SerializeField] private Sprite[] floorSprite;
@@ -27,6 +28,8 @@ public class IslandGenerator : MonoBehaviour
         boxCollider2D.offset = new Vector2(0.5f,0.5f);
         GenerateBorder();
         GenerateFloor();
+        islandCenterX = (this.transform.position.x + islandWidth) - 1.5f;
+        islandCenterY = (this.transform.position.y + islandHeight) - 1.5f;
     }
     
     private void GenerateBorder()
