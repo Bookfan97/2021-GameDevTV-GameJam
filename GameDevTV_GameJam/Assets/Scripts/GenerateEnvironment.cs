@@ -156,5 +156,6 @@ public class GenerateEnvironment : MonoBehaviour
     private void MovePlayer()
     {
         player.transform.position = new Vector3(floorX / 2, floorY / 2, 0);
+        FindObjectOfType<Camera>().ViewportToWorldPoint(player.transform.position);
     }
 }
