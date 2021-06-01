@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class IslandCollider : MonoBehaviour
 {
+    private GameManager _gameManager;
+    private bool addedCoin;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gameManager = FindObjectOfType<GameManager>();
+        addedCoin = false;
     }
 
     // Update is called once per frame
@@ -21,6 +24,11 @@ public class IslandCollider : MonoBehaviour
         Debug.Log("COLLISION" +collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Player"))
         {
+            if (!addedCoin)
+            {
+                _gameManager.AddCointCount();
+                addedCoin = true;
+            }
             Destroy(this.gameObject.transform.parent.gameObject);
         }
 
