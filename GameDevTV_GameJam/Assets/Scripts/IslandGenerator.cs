@@ -32,6 +32,15 @@ public class IslandGenerator : MonoBehaviour
         islandCenterY = (this.transform.position.y + islandHeight) - 1.5f;
         GenerateCoin();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collider: " + collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            DestroyImmediate(this.gameObject);
+        }
+    }
     
     private void GenerateBorder()
     {
