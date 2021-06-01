@@ -7,7 +7,7 @@ public class IslandGenerator : MonoBehaviour
     public float islandCenterX, islandCenterY;
     [SerializeField] public int islandWidth = 2;
     [SerializeField] public int islandHeight = 2;
-    
+    [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject islandSpritePrefab;
     [SerializeField] private Sprite[] floorSprite;
     [SerializeField] private Sprite[] bottomBorderSprite;
@@ -30,6 +30,7 @@ public class IslandGenerator : MonoBehaviour
         GenerateFloor();
         islandCenterX = (this.transform.position.x + islandWidth) - 1.5f;
         islandCenterY = (this.transform.position.y + islandHeight) - 1.5f;
+        GenerateCoin();
     }
     
     private void GenerateBorder()
@@ -103,6 +104,7 @@ public class IslandGenerator : MonoBehaviour
             newSpriteTile.GetComponent<SpriteRenderer>().sortingOrder = 5;
             newSpriteTile.transform.SetParent(this.transform, false);
     }
+    
     private void InstantiateBorderDecorationTile(int x, int y, Sprite islandSprite, int rotation)
     {
             GameObject newSpriteTile = Instantiate(islandSpritePrefab, new Vector2(x, y), Quaternion.identity);
@@ -111,4 +113,14 @@ public class IslandGenerator : MonoBehaviour
             newSpriteTile.gameObject.transform.Rotate(0,0,rotation);
             newSpriteTile.transform.SetParent(this.transform, false);
     }
+    
+    private void GenerateCoin()
+    {
+        GameObject newCoin = Instantiate(coinPrefab, new Vector2(.5f, .5f), Quaternion.identity);
+        //newCoin.GetComponent<SpriteRenderer>().sprite = islandSprite;
+        //newCoin.gameObject.transform.position = new Vector3(islandCenterX, islandCenterY, 0);
+        newCoin.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        newCoin.transform.SetParent(this.transform, false);
+    }
+
 }

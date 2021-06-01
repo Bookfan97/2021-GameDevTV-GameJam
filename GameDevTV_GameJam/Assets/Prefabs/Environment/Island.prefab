@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5d6874671809441af78bae5dbf1a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  islandCenterX: 0
+  islandCenterY: 0
   islandWidth: 2
   islandHeight: 2
+  coinPrefab: {fileID: 1502187281303722655, guid: 0c29e097e5e14c54289094d57bbdf88a, type: 3}
   islandSpritePrefab: {fileID: 5639452147430563482, guid: ae69735c6044b404696007e4ba879e3d, type: 3}
   floorSprite:
   - {fileID: 21300000, guid: da58d4e94f05ce544922a7daabe643ff, type: 3}
