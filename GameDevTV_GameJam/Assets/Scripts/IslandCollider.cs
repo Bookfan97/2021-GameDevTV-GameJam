@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IslandCollider : MonoBehaviour
 {
+    [SerializeField] private GameObject mist;
     private GameManager _gameManager;
     private bool addedCoin;
     // Start is called before the first frame update
@@ -21,7 +22,7 @@ public class IslandCollider : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("COLLISION" +collision.gameObject.tag);
+        Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             if (!addedCoin)
@@ -29,6 +30,7 @@ public class IslandCollider : MonoBehaviour
                 _gameManager.AddCointCount();
                 addedCoin = true;
             }
+            Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity);
             Destroy(this.gameObject.transform.parent.gameObject);
         }
 
