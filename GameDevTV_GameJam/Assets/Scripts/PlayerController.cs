@@ -30,18 +30,28 @@ public class PlayerController : MonoBehaviour
         //Get Input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
-        
+        /*
+         * mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
+         *
+        float h = 2 * Input.GetAxis("Mouse X");
+        float v = 2 * Input.GetAxis("Mouse Y");
+
+        mousePos = new Vector2(h, v);
+        */
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        Vector2 direction = new Vector2(transform.position.x - mousePosition.x, transform.position.y - mousePosition.y);
         if (Input.GetButtonDown("Fire1"))
-        {
-            Fire();
+        { 
+            Fire(-direction);
         }
     }
 
     void FixedUpdate()
     {
         FixedPlayerMovement();
-    }
+    } 
 
     //Player movement function, updates cannon position to player
     private void FixedPlayerMovement()
@@ -56,10 +66,12 @@ public class PlayerController : MonoBehaviour
     }
     
     //Fires Projectiles
-    private void Fire()
+    private void Fire(Vector2 direction)
     {
+        
         GameObject projectile = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
         Rigidbody2D rbProj = projectile.GetComponent<Rigidbody2D>();
-        rbProj.AddForce(mousePos * projectileForce, ForceMode2D.Impulse);
+        //projectile.transform.position = firePoint.position;
+        rbProj.AddForce(direction * projectileForce, ForceMode2D.Impulse);
     }
 }

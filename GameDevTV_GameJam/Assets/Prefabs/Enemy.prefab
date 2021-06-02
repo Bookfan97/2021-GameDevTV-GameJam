@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBall: {fileID: 1724094419796212142, guid: fb4f3bceb278f4b42ba07d78e19e2daa, type: 3}
-  projectileForce: 20
+  projectileForce: 0.5
   firePoint: {fileID: 8967234623594166131}
   aggro: 0
   canFire: 0
