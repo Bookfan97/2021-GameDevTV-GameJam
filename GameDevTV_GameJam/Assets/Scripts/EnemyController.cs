@@ -105,6 +105,7 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log("FIRE");
         GameObject projectile = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
+        //projectile.transform.position = firePoint.position;
         Rigidbody2D rbProj = projectile.GetComponent<Rigidbody2D>();
         rbProj.AddForce(player.gameObject.transform.position * projectileForce, ForceMode2D.Impulse);
         attackCounter = waitAfterAttack;

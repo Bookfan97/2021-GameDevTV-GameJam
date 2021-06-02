@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 303887329800659420}
   - component: {fileID: 7556564051085240616}
+  - component: {fileID: 2346471992330837934}
   m_Layer: 0
   m_Name: Clouds
   m_TagString: Untagged
@@ -86,6 +87,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 672e54bd7d4c4864a8937ee5012e174e, type: 3}
   - {fileID: 21300000, guid: b5975f7fa7fdee744b38c650bdbfd171, type: 3}
   - {fileID: 21300000, guid: 6bcfd1d50bb5ac5479d312df4ef40f1f, type: 3}
+--- !u!114 &2346471992330837934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200802506192997175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339398ab892ab0b41bbc04d5e8f8fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1
 --- !u!1 &3542185723244342019
 GameObject:
   m_ObjectHideFlags: 0
