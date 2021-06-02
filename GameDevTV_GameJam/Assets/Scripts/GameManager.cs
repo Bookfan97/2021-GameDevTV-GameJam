@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private int coinCount;
+    private int islandCounter;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,16 +17,22 @@ public class GameManager : MonoBehaviour
     {
         coinCount = 0;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void AddCointCount()
     {
         coinCount++;
-        Debug.Log("Coins: "+ coinCount);
+    }
+    
+    public void AddIslandCount()
+    {
+        islandCounter++;
+        Debug.Log(islandCounter);
+    }
+    
+    public void RemoveIslandCount()
+    {
+        islandCounter--;
+        Debug.Log(islandCounter);
     }
 }
