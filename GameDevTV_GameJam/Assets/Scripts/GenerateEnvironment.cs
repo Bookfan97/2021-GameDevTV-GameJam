@@ -14,11 +14,13 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject islandPrefab;
     
     private static List<GameObject> _islands;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         _islands = new List<GameObject>();
         player = FindObjectOfType<PlayerController>().gameObject;
+        gameManager = FindObjectOfType<GameManager>();
         RandomizeMap();
         GenerateFloor();
         MovePlayer();
@@ -98,39 +100,54 @@ public class GenerateEnvironment : MonoBehaviour
 
     private void InstantiateIsland(int x, int y)
     {
+        int counter = 0;
         bool valid = CanSpawn(x, y);
+        while (!valid && counter < 10)
+        {
+            valid = CanSpawn(x + 1, y + 1);
+            counter++;
+        }
+
         if (valid)
         {
             GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity);
             newIsland.transform.parent = this.transform;
             newIsland.transform.position = new Vector3(x, y, 0);
             BoxCollider2D col = newIsland.GetComponent<BoxCollider2D>();
-            //Physics2D.OverlapCollider(newIsland.GetComponent<BoxCollider>(), filter, results);
-            //Destroy(newIsland);
+            gameManager.AddIslandCount();
             _islands.Add(newIsland);
         }
     }
 
     private static bool CanSpawn(int x, int y)
     {
-        
-        if (_islands.Count <= 0)
-        {
-            return true;
-        }
-        else
+        float islandWidth = 4;
+        float islandHeight = 4;
+        if (_islands.Count > 0)
         {
             foreach (var island in _islands)
             {
-                IslandGenerator IG = island.GetComponent<IslandGenerator>();
-                if ((IG.islandCenterX - IG.islandWidth) + buffer < (x - IG.islandWidth) &&
-                    (x + IG.islandWidth) < (IG.islandCenterX + IG.islandWidth) + buffer)
+                //X1 = Left
+                //x2 = Right
+                //Y1 = Top
+                //Y2 = Bottom
+
+                //Island to spawn
+                float RectA_X1 = x - islandWidth;
+                float RectA_X2 = x + islandWidth;
+                float RectA_Y1 = y + islandHeight;
+                float RectA_Y2 = y - islandHeight;
+                //Existing Island
+                float RectB_X1 = island.GetComponent<IslandGenerator>().islandCenterX - islandWidth;
+                float RectB_X2 = island.GetComponent<IslandGenerator>().islandCenterX + islandWidth;
+                float RectB_Y1 = island.GetComponent<IslandGenerator>().islandCenterY + islandHeight;
+                float RectB_Y2 = island.GetComponent<IslandGenerator>().islandCenterY - islandHeight;
+                if (RectA_X1 < RectB_X2 && RectA_X2 > RectB_X1 &&
+                    RectA_X1 > RectB_X2 && RectA_X2 < RectB_X1 &&
+                    RectA_Y1 > RectB_Y2 && RectA_Y2 < RectB_Y1 && 
+                    RectA_Y1 < RectB_Y2 && RectA_Y2 > RectB_Y1)
                 {
-                    return false;
-                }
-                else if ((IG.islandCenterY - IG.islandHeight) + buffer < (y + IG.islandHeight) &&
-                         (y - IG.islandHeight) < (IG.islandCenterY + IG.islandHeight) + buffer)
-                {
+                    Debug.Log("Islands Overlap");
                     return false;
                 }
             }
@@ -142,6 +159,7 @@ public class GenerateEnvironment : MonoBehaviour
     {
         GameObject newFloorTile = Instantiate(waterTile, new Vector2(x, y), Quaternion.identity); 
         newFloorTile.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        newFloorTile.layer = 2;
         newFloorTile.transform.parent = this.transform;
     }
     
@@ -157,5 +175,31 @@ public class GenerateEnvironment : MonoBehaviour
     {
         player.transform.position = new Vector3(floorX / 2, floorY / 2, 0);
         FindObjectOfType<Camera>().ViewportToWorldPoint(player.transform.position);
+    }
+
+    void CanGenerateIsland(int x, int y)
+    {
+        RaycastHit hit;
+        var temp = Physics.Raycast(new Vector3(x, y, 0), Vector3.down, out hit, 30);
+        Debug.Log("CanGenerateIsland: "+temp);
+        if (temp)
+        { 
+            Quaternion spawnRotation = Quaternion.identity;
+            Vector3 boxOverlap = new Vector3(
+                islandPrefab.gameObject.GetComponent<IslandGenerator>().islandHeight, 
+                islandPrefab.gameObject.GetComponent<IslandGenerator>().islandWidth,
+                0
+                );
+            Collider[] colliders = new Collider[1];
+            int numCols = Physics.OverlapBoxNonAlloc(
+                hit.point,
+                boxOverlap,
+                colliders,
+                spawnRotation,
+                0
+            );
+            
+            Debug.Log("Num cols found: "+ numCols);
+        }
     }
 }

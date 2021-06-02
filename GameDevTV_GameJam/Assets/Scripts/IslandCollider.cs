@@ -6,12 +6,11 @@ public class IslandCollider : MonoBehaviour
 {
     [SerializeField] private GameObject mist;
     private GameManager _gameManager;
-    private bool addedCoin;
+    private bool hasCollide = false;
     // Start is called before the first frame update
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        addedCoin = false;
     }
 
     // Update is called once per frame
@@ -25,19 +24,27 @@ public class IslandCollider : MonoBehaviour
         Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!addedCoin)
+            var children = this.gameObject.transform.parent.GetComponentsInChildren<IslandCollider>();
+            Debug.Log(children.Length);
+            foreach (var child in children)
             {
-                _gameManager.AddCointCount();
-                addedCoin = true;
+                child.GetComponent<IslandCollider>().enabled = false;
             }
-            Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity);
-            Destroy(this.gameObject.transform.parent.gameObject);
+                _gameManager.AddCointCount();
+                _gameManager.RemoveIslandCount();
+                Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity); 
+                Destroy(this.gameObject.transform.parent.gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Island"))
+        /*if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity);
+            Destroy(this.gameObject.transform.parent.gameObject);
+        }*/
+        if (collision.gameObject.CompareTag("Island") || collision.gameObject.GetComponentsInChildren<IslandCollider>().Length > 0)
         {
             Debug.Log("Island overlap");
-            Destroy(this);
+            Destroy(collision.gameObject);
         }
     }
 }
