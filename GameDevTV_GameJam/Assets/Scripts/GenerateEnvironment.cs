@@ -12,9 +12,12 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject borderPrefab;
     [SerializeField] private Sprite[] borderSprites;
     [SerializeField] private GameObject islandPrefab;
+    [SerializeField] Object enemyPrefab;
+    [SerializeField] private int amountOfEnemies;
     
     private static List<GameObject> _islands;
     private GameManager gameManager;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,39 @@ public class GenerateEnvironment : MonoBehaviour
         MovePlayer();
         GenerateBorder();
         GenerateObjects();
+        SpawnEnemy();
+    }
+
+    private void SpawnEnemy()
+    {
+        for (int i = 0; i < amountOfEnemies; i++)
+        {
+            bool enemyCanSpawn = false;
+            int xCoord = 0; 
+            int yCoord = 0;
+            
+            
+            //Randomly set X and Y
+            if (Random.Range(0,100) > 50)
+            {
+                xCoord = (int) Random.Range(player.transform.position.x + 3, floorX);
+            }
+            else
+            {
+                xCoord = (int) Random.Range(0, player.transform.position.x - 3);
+            }
+            if (Random.Range(0,100) > 50)
+            {
+                yCoord = (int) Random.Range(player.transform.position.y + 3, floorY); 
+            }
+            else
+            {
+                yCoord = (int) Random.Range(0, player.transform.position.y - 3);
+            }
+            
+            Vector2 spawnLocation = new Vector2(xCoord, yCoord);
+            Object newEnemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity);
+        }
     }
 
     // Update is called once per frame

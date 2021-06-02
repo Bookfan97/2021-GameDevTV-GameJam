@@ -13,13 +13,15 @@ public class EnemyController : MonoBehaviour
     public float attackCounter, moveCounter;
     public float waitAfterAttack = 3, waitToMove = 3, minDistance = 2, maxDistance = 5;
     public int batAttackSpeed = 5;
-
     public float patrolTest = 0;
+    private GenerateEnvironment env;
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
         targetPosition = Vector3.zero;
+        env = FindObjectOfType<GenerateEnvironment>();
     }
 
     // Update is called once per frame
@@ -77,8 +79,10 @@ public class EnemyController : MonoBehaviour
 
     private void MoveToPosition()
     {
-        //CheckForNewPosition();
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, batAttackSpeed * Time.deltaTime);
+        Vector3 dir = this.transform.position - targetPosition;
+        int angle = (int) (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
     }
 
     void CheckForNewPosition()
@@ -92,8 +96,7 @@ public class EnemyController : MonoBehaviour
             }
             else if(!aggro)
             {
-                patrolTest++;
-                targetPosition = new Vector3(Random.Range(-10,10),Random.Range(-10,10),0);
+                targetPosition = new Vector3(Random.Range(1,env.floorX),Random.Range(1,env.floorY),0);
             }
         }
     }

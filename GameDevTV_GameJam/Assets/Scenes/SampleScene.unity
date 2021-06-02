@@ -220,7 +220,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &614963889 stripped
 GameObject:
@@ -284,7 +284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8774476054903840982, guid: 84e5ba316b5a7184c872eb1f374eb413, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8774476054903840982, guid: 84e5ba316b5a7184c872eb1f374eb413, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2148851104485401469, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2148851104485401469, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -472,6 +472,14 @@ PrefabInstance:
     - target: {fileID: 2148851104485401469, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149453778997101799, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 8967234623158183533, guid: 20c59018f00176244974408024d71e10, type: 3}
+    - target: {fileID: 2149453778997101799, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
+      propertyPath: amountOfEnemies
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2974425019809946979, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_Name
