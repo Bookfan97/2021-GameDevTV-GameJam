@@ -217,7 +217,7 @@ public class GenerateEnvironment : MonoBehaviour
     {
         RaycastHit hit;
         var temp = Physics.Raycast(new Vector3(x, y, 0), Vector3.down, out hit, 30);
-        Debug.Log("CanGenerateIsland: "+temp);
+        //Debug.Log("CanGenerateIsland: "+temp);
         if (temp)
         { 
             Quaternion spawnRotation = Quaternion.identity;

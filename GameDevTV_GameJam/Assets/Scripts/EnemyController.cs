@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private GameObject explode;
     [SerializeField] private GameObject cannonBall;
     [SerializeField] private float projectileForce = 20f;
     [SerializeField] Transform firePoint;
@@ -15,7 +18,7 @@ public class EnemyController : MonoBehaviour
     public int batAttackSpeed = 5;
     public float patrolTest = 0;
     private GenerateEnvironment env;
-
+    public bool needNewPosition = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +57,17 @@ public class EnemyController : MonoBehaviour
             CheckForNewPosition();
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Enemy: "+other.name);
+        if (other.gameObject.tag == "Bullet")
+        {
+            Debug.Log("I'VE BEEN HIT");
+            Instantiate(explode, this.transform.position, Quaternion.identity); 
+            Destroy(this.gameObject);
+        }
     }
 
     private void CheckDistanceToPlayer()

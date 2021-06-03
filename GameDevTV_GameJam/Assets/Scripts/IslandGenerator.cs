@@ -35,7 +35,7 @@ public class IslandGenerator : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collider: " + collision.gameObject.tag);
+        //Debug.Log("Collider: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Player"))
         {
             DestroyImmediate(this.gameObject);
