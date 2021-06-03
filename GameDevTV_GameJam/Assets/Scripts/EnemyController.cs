@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         targetPosition = Vector3.zero;
         env = FindObjectOfType<GenerateEnvironment>();
+        firePoint.position = this.transform.position;
     }
 
     // Update is called once per frame
@@ -63,12 +64,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enemy: "+other.name);
         if (other.gameObject.tag == "Bullet")
         {
             Instantiate(explode, this.transform.position, Quaternion.identity); 
             manager.RemoveEnemyCount();
             env.SpawnEnemy(1);
+            Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
     }
@@ -120,11 +121,11 @@ public class EnemyController : MonoBehaviour
     
     private void Fire()
     {
-        Debug.Log("FIRE");
+        Vector2 direction = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
         GameObject projectile = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
-        //projectile.transform.position = firePoint.position;
+        projectile.tag = "EnemyBullet";
         Rigidbody2D rbProj = projectile.GetComponent<Rigidbody2D>();
-        rbProj.AddForce(player.gameObject.transform.position * projectileForce, ForceMode2D.Impulse);
+        rbProj.AddForce(-direction * projectileForce, ForceMode2D.Impulse);
         attackCounter = waitAfterAttack;
     }
 }

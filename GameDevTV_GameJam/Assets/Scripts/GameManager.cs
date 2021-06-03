@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         coinCount = 0;
         maxEnemyCount = 3;
+        lives = 6;
     }
 
     public void AddCoinCount()
@@ -70,5 +71,10 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemyCount()
     {
         enemyCount--;
+    }
+    
+    public void RemoveLivesCount()
+    {
+        lives--;
     }
 }

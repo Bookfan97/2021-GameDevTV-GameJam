@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explode: {fileID: 2556657354935375220, guid: 0a17b96ef2c41c04a93d5f82bb7a632d, type: 3}
   cannonBall: {fileID: 1724094419796212142, guid: fb4f3bceb278f4b42ba07d78e19e2daa, type: 3}
-  projectileForce: 5
+  projectileForce: 0.5
   firePoint: {fileID: 1344281349666307349}
   aggro: 0
   canFire: 0

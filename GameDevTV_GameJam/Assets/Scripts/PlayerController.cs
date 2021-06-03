@@ -28,6 +28,19 @@ public class PlayerController : MonoBehaviour
         camera = FindObjectOfType<Camera>();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "EnemyBullet")
+        {
+            manager.RemoveLivesCount();
+
+            if (manager.lives <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
     void Update()
     {
         //Get Input
