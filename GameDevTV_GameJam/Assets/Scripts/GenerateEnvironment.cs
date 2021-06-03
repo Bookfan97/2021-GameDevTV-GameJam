@@ -29,17 +29,15 @@ public class GenerateEnvironment : MonoBehaviour
         MovePlayer();
         GenerateBorder();
         GenerateObjects();
-        SpawnEnemy();
+        SpawnEnemy(amountOfEnemies);
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy(int numEnemies)
     {
-        for (int i = 0; i < amountOfEnemies; i++)
+        for (int i = 0; i < numEnemies; i++)
         {
-            bool enemyCanSpawn = false;
             int xCoord = 0; 
             int yCoord = 0;
-            
             
             //Randomly set X and Y
             if (Random.Range(0,100) > 50)
@@ -61,6 +59,7 @@ public class GenerateEnvironment : MonoBehaviour
             
             Vector2 spawnLocation = new Vector2(xCoord, yCoord);
             Object newEnemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity);
+            gameManager.AddEnemyCount();
         }
     }
 
@@ -134,7 +133,7 @@ public class GenerateEnvironment : MonoBehaviour
         }
     }
 
-    private void InstantiateIsland(int x, int y)
+    public void InstantiateIsland(int x, int y)
     {
         int counter = 0;
         bool valid = CanSpawn(x, y);

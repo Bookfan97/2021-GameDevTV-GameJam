@@ -19,10 +19,12 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] private Sprite BRCornerSprite;
     [SerializeField] private Sprite ULCornerSprite;
     [SerializeField] private Sprite BLCornerSprite;
-    
+
+    private GenerateEnvironment _environment;
     // Start is called before the first frame update
     void Start()
     {
+        _environment = FindObjectOfType<GenerateEnvironment>();
         var boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.size = new Vector2(islandWidth+2, islandHeight+2);
         boxCollider2D.offset = new Vector2(0.5f,0.5f);
@@ -38,6 +40,7 @@ public class IslandGenerator : MonoBehaviour
         //Debug.Log("Collider: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Player"))
         {
+            _environment.InstantiateIsland(Random.Range(1, _environment.floorX-1), Random.Range(1, _environment.floorY-1));
             DestroyImmediate(this.gameObject);
         }
     }

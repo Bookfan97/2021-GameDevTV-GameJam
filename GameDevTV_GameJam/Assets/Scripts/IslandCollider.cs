@@ -33,7 +33,7 @@ public class IslandCollider : MonoBehaviour
             {
                 child.GetComponent<IslandCollider>().enabled = false;
             }
-                _gameManager.AddCointCount();
+                _gameManager.AddCoinCount();
                 _gameManager.RemoveIslandCount();
                 Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity); 
                 Destroy(this.gameObject.transform.parent.gameObject);

@@ -18,10 +18,12 @@ public class EnemyController : MonoBehaviour
     public int batAttackSpeed = 5;
     public float patrolTest = 0;
     private GenerateEnvironment env;
+    private GameManager manager;
     public bool needNewPosition = false;
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<GameManager>();
         player = FindObjectOfType<PlayerController>();
         targetPosition = Vector3.zero;
         env = FindObjectOfType<GenerateEnvironment>();
@@ -64,8 +66,9 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Enemy: "+other.name);
         if (other.gameObject.tag == "Bullet")
         {
-            Debug.Log("I'VE BEEN HIT");
             Instantiate(explode, this.transform.position, Quaternion.identity); 
+            manager.RemoveEnemyCount();
+            env.SpawnEnemy(1);
             Destroy(this.gameObject);
         }
     }
