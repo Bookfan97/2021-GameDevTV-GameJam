@@ -7,19 +7,22 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] public float moveSpeed = 5f;
     [SerializeField] Transform firePoint;
     [SerializeField] private GameObject cannonBall;
     [SerializeField] private float projectileForce = 20f;
     [SerializeField] private GameObject cannon = null;
     private Rigidbody2D playerRb, cnRB;
     private SpriteRenderer sr;
+    private GameManager manager;
     private Vector2 movement, mousePos;
     private Camera camera;
     private float cannonOffsetX, cannonOffsetY;
+    
     void Start()
     {
         //Initialize Components
+        manager = FindObjectOfType<GameManager>();
         playerRb = GetComponent<Rigidbody2D>();
         sr = GetComponent <SpriteRenderer>();
         camera = FindObjectOfType<Camera>();
@@ -30,17 +33,11 @@ public class PlayerController : MonoBehaviour
         //Get Input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        /*
-         * mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
-         *
-        float h = 2 * Input.GetAxis("Mouse X");
-        float v = 2 * Input.GetAxis("Mouse Y");
-
-        mousePos = new Vector2(h, v);
-        */
+     
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
+        
         Vector2 direction = new Vector2(transform.position.x - mousePosition.x, transform.position.y - mousePosition.y);
         if (Input.GetButtonDown("Fire1"))
         { 

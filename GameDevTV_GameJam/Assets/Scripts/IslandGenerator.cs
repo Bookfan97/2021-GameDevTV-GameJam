@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IslandGenerator : MonoBehaviour
 {
+    public int idPos;
     public float islandCenterX, islandCenterY;
     [SerializeField] public int islandWidth = 2;
     [SerializeField] public int islandHeight = 2;

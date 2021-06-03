@@ -14,14 +14,13 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject islandPrefab;
     [SerializeField] Object enemyPrefab;
     [SerializeField] private int amountOfEnemies;
-    
-    private static List<GameObject> _islands;
+
     private GameManager gameManager;
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
-        _islands = new List<GameObject>();
         player = FindObjectOfType<PlayerController>().gameObject;
         gameManager = FindObjectOfType<GameManager>();
         RandomizeMap();
@@ -36,11 +35,11 @@ public class GenerateEnvironment : MonoBehaviour
     {
         for (int i = 0; i < numEnemies; i++)
         {
-            int xCoord = 0; 
+            int xCoord = 0;
             int yCoord = 0;
-            
+
             //Randomly set X and Y
-            if (Random.Range(0,100) > 50)
+            if (Random.Range(0, 100) > 50)
             {
                 xCoord = (int) Random.Range(player.transform.position.x + 3, floorX);
             }
@@ -48,15 +47,16 @@ public class GenerateEnvironment : MonoBehaviour
             {
                 xCoord = (int) Random.Range(0, player.transform.position.x - 3);
             }
-            if (Random.Range(0,100) > 50)
+
+            if (Random.Range(0, 100) > 50)
             {
-                yCoord = (int) Random.Range(player.transform.position.y + 3, floorY); 
+                yCoord = (int) Random.Range(player.transform.position.y + 3, floorY);
             }
             else
             {
                 yCoord = (int) Random.Range(0, player.transform.position.y - 3);
             }
-            
+
             Vector2 spawnLocation = new Vector2(xCoord, yCoord);
             Object newEnemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity);
             gameManager.AddEnemyCount();
@@ -66,9 +66,9 @@ public class GenerateEnvironment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     private void RandomizeMap()
     {
         floorX = Random.Range(40, 80);
@@ -88,13 +88,14 @@ public class GenerateEnvironment : MonoBehaviour
 
     private void GenerateBorder()
     {
-        for (int x = -5; x < floorX +5; x++)
+        for (int x = -5; x < floorX + 5; x++)
         {
             //Bottom Wall
             for (int j = -7; j < 0; j++)
             {
                 InstantiateWallTile(x, j);
             }
+
             //Top Wall
             for (int j = 0; j < 5; j++)
             {
@@ -113,7 +114,7 @@ public class GenerateEnvironment : MonoBehaviour
             //Right Wall
             for (int j = 0; j < 7; j++)
             {
-                InstantiateWallTile(floorX + j, y); 
+                InstantiateWallTile(floorX + j, y);
             }
         }
     }
@@ -127,19 +128,21 @@ public class GenerateEnvironment : MonoBehaviour
             {
                 if (Random.Range(0, 1000) < 5)
                 {
-                    InstantiateIsland(x,y);
+                    InstantiateIsland(x, y);
                 }
             }
         }
     }
 
+
     public void InstantiateIsland(int x, int y)
     {
         int counter = 0;
         bool valid = CanSpawn(x, y);
+        Debug.Log("Island #" + counter + ": " + valid);
         while (!valid && counter < 10)
         {
-            valid = CanSpawn(x + 1, y + 1);
+            valid = CanSpawn(Random.Range(1, floorX - 1), Random.Range(1, floorY - 1));
             counter++;
         }
 
@@ -150,7 +153,6 @@ public class GenerateEnvironment : MonoBehaviour
             newIsland.transform.position = new Vector3(x, y, 0);
             BoxCollider2D col = newIsland.GetComponent<BoxCollider2D>();
             gameManager.AddIslandCount();
-            _islands.Add(newIsland);
         }
     }
 
@@ -158,7 +160,8 @@ public class GenerateEnvironment : MonoBehaviour
     {
         float islandWidth = 4;
         float islandHeight = 4;
-        if (_islands.Count > 0)
+        IslandGenerator[] _islands = FindObjectsOfType<IslandGenerator>();
+        if (((ICollection) _islands).Count > 0)
         {
             foreach (var island in _islands)
             {
@@ -179,7 +182,7 @@ public class GenerateEnvironment : MonoBehaviour
                 float RectB_Y2 = island.GetComponent<IslandGenerator>().islandCenterY - islandHeight;
                 if (RectA_X1 < RectB_X2 && RectA_X2 > RectB_X1 &&
                     RectA_X1 > RectB_X2 && RectA_X2 < RectB_X1 &&
-                    RectA_Y1 > RectB_Y2 && RectA_Y2 < RectB_Y1 && 
+                    RectA_Y1 > RectB_Y2 && RectA_Y2 < RectB_Y1 &&
                     RectA_Y1 < RectB_Y2 && RectA_Y2 > RectB_Y1)
                 {
                     Debug.Log("Islands Overlap");
@@ -187,17 +190,18 @@ public class GenerateEnvironment : MonoBehaviour
                 }
             }
         }
+
         return true;
     }
 
     private void InstantiateWaterTile(int x, int y)
     {
-        GameObject newFloorTile = Instantiate(waterTile, new Vector2(x, y), Quaternion.identity); 
+        GameObject newFloorTile = Instantiate(waterTile, new Vector2(x, y), Quaternion.identity);
         newFloorTile.GetComponent<SpriteRenderer>().sortingOrder = 0;
         newFloorTile.layer = 2;
         newFloorTile.transform.parent = this.transform;
     }
-    
+
     private void InstantiateWallTile(int x, int y)
     {
         GameObject newBorderTile = Instantiate(borderPrefab, new Vector2(x, y), Quaternion.identity);
@@ -205,7 +209,7 @@ public class GenerateEnvironment : MonoBehaviour
         newBorderTile.GetComponent<SpriteRenderer>().sortingOrder = 11;
         newBorderTile.transform.parent = this.transform;
     }
-    
+
     private void MovePlayer()
     {
         player.transform.position = new Vector3(floorX / 2, floorY / 2, 0);
@@ -218,13 +222,13 @@ public class GenerateEnvironment : MonoBehaviour
         var temp = Physics.Raycast(new Vector3(x, y, 0), Vector3.down, out hit, 30);
         //Debug.Log("CanGenerateIsland: "+temp);
         if (temp)
-        { 
+        {
             Quaternion spawnRotation = Quaternion.identity;
             Vector3 boxOverlap = new Vector3(
-                islandPrefab.gameObject.GetComponent<IslandGenerator>().islandHeight, 
+                islandPrefab.gameObject.GetComponent<IslandGenerator>().islandHeight,
                 islandPrefab.gameObject.GetComponent<IslandGenerator>().islandWidth,
                 0
-                );
+            );
             Collider[] colliders = new Collider[1];
             int numCols = Physics.OverlapBoxNonAlloc(
                 hit.point,
@@ -233,8 +237,8 @@ public class GenerateEnvironment : MonoBehaviour
                 spawnRotation,
                 0
             );
-            
-            Debug.Log("Num cols found: "+ numCols);
+
+            Debug.Log("Num cols found: " + numCols);
         }
     }
 }

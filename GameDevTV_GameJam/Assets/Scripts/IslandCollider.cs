@@ -24,18 +24,18 @@ public class IslandCollider : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
+        //Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             var children = this.gameObject.transform.parent.GetComponentsInChildren<IslandCollider>();
             //Debug.Log(children.Length);
-            foreach (var child in children)
+            /*foreach (var child in children)
             {
                 child.GetComponent<IslandCollider>().enabled = false;
-            }
+            }*/
                 _gameManager.AddCoinCount();
                 _gameManager.RemoveIslandCount();
-                Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity); 
+                Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity);
                 Destroy(this.gameObject.transform.parent.gameObject);
         }
 
