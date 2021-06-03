@@ -14,6 +14,9 @@ public class Explode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.GetComponent<SpriteRenderer>().sprite = fireSprites[Random.Range(0, fireSprites.Length)];
+        if (Random.Range(0,100) < 25)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = fireSprites[Random.Range(0, fireSprites.Length)];
+        }
     }
 }
