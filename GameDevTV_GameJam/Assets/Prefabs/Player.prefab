@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 7184725878526186393}
   - component: {fileID: 7184725878526186406}
   - component: {fileID: 7184725878526186407}
+  - component: {fileID: 614963895}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -166,7 +167,7 @@ MonoBehaviour:
   moveSpeed: 5
   firePoint: {fileID: 5611326020610896866}
   cannonBall: {fileID: 1724094419796212142, guid: fb4f3bceb278f4b42ba07d78e19e2daa, type: 3}
-  projectileForce: 20
+  projectileForce: 5
   cannon: {fileID: 0}
 --- !u!212 &7184725878526186393
 SpriteRenderer:
@@ -207,7 +208,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 32097f6577a76e54cb0dbad531c1f8ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -247,7 +248,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7184725878526186402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -284,6 +285,22 @@ PolygonCollider2D:
       - {x: 0.21588218, y: -0.376985}
       - {x: 0.22, y: -0.255}
       - {x: 0.22, y: -0.155}
+--- !u!70 &614963895
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7184725878526186402}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1.08}
+  m_Direction: 0
 --- !u!1 &7184725878840670399
 GameObject:
   m_ObjectHideFlags: 0

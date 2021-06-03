@@ -14,18 +14,12 @@ public class FortCollider : MonoBehaviour
         env = FindObjectOfType<GenerateEnvironment>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            //TODO: Remove coins from player and "store" in long term storage
+            _gameManager.DepositLocalCoin();
         }
 
         if (collision.gameObject.CompareTag("Enemy"))

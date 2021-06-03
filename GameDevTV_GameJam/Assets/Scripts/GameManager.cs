@@ -6,19 +6,22 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public int coinCount;
+    public int localCoinCount;
+    public int totalCoinCount;
     public int islandCounter;
     public int enemyCount;
     public int maxEnemyCount = 3;
     public int lives = 6;
     private GenerateEnvironment env;
     private PlayerController player;
+    private float initalMoveSpeed;
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
         env = FindObjectOfType<GenerateEnvironment>();
         ResetCounters();
+        initalMoveSpeed = player.moveSpeed;
     }
 
     private void Update()
@@ -31,25 +34,34 @@ public class GameManager : MonoBehaviour
 
     private void ResetCounters()
     {
-        coinCount = 0;
+        localCoinCount = 0;
         maxEnemyCount = 3;
         lives = 6;
     }
 
-    public void AddCoinCount()
+    public void DepositLocalCoin()
     {
-        coinCount++;
-        if (coinCount % 5 == 1)
-        {
-            maxEnemyCount++;
-            player.moveSpeed = (player.moveSpeed - GetCoinCount() % 2);
-        }
-
+        totalCoinCount += localCoinCount;
+        localCoinCount = 0;
+        player.moveSpeed = initalMoveSpeed;
     }
 
-    public int GetCoinCount()
+    public void AddCoinCount()
     {
-        return coinCount;
+        localCoinCount++;
+        if (localCoinCount % 5 == 1)
+        {
+            player.moveSpeed = (player.moveSpeed - GetLocalCoinCount() % 2);
+        }
+        if ((localCoinCount + totalCoinCount) % 5 == 1)
+        {
+            maxEnemyCount++;
+        }
+    }
+
+    public int GetLocalCoinCount()
+    {
+        return localCoinCount;
     }
     
     public void AddIslandCount()
