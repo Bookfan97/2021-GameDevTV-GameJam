@@ -311,6 +311,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7184725878526186402, guid: df50fd3cfbbf14c439321b79d362c66b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7184725878526186404, guid: df50fd3cfbbf14c439321b79d362c66b, type: 3}
       propertyPath: projectileForce
       value: 5
@@ -419,14 +423,6 @@ PrefabInstance:
     - target: {fileID: 2148851104485401469, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149453778997101799, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
-      propertyPath: enemyPrefab
-      value: 
-      objectReference: {fileID: 1045631403105953514, guid: f12660eec236a3547b09367dc0a57dcb, type: 3}
-    - target: {fileID: 2149453778997101799, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
-      propertyPath: amountOfEnemies
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2974425019809946979, guid: b48de563a10eb1a40a79c21a906de6ee, type: 3}
       propertyPath: m_Name

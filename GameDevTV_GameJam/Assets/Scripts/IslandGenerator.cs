@@ -4,27 +4,44 @@ using UnityEngine;
 
 public class IslandGenerator : MonoBehaviour
 {
-    public int idPos;
+    [SerializeField] private bool isFort = false;
     public float islandCenterX, islandCenterY;
     [SerializeField] public int islandWidth = 2;
     [SerializeField] public int islandHeight = 2;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject islandSpritePrefab;
+    [SerializeField] private GameObject fortSpritePrefab;
     [SerializeField] private Sprite[] floorSprite;
     [SerializeField] private Sprite[] bottomBorderSprite;
     [SerializeField] private Sprite[] topBorderSprite;
     [SerializeField] private Sprite[] leftBorderSprite;
     [SerializeField] private Sprite[] rightBorderSprite;
     [SerializeField] private Sprite[] decorationBorderSprite;
+    [SerializeField] private Sprite[] fortWallSprite;
     [SerializeField] private Sprite URCornerSprite;
     [SerializeField] private Sprite BRCornerSprite;
     [SerializeField] private Sprite ULCornerSprite;
     [SerializeField] private Sprite BLCornerSprite;
+    [SerializeField] private Sprite URFortCornerSprite;
+    [SerializeField] private Sprite BRFortCornerSprite;
+    [SerializeField] private Sprite ULFortCornerSprite;
+    [SerializeField] private Sprite BLFortCornerSprite;
 
     private GenerateEnvironment _environment;
+    private GameObject toUse;
     // Start is called before the first frame update
     void Start()
     {
+        if (isFort)
+        {
+            toUse = fortSpritePrefab;
+            islandHeight += 2;
+            islandWidth += 2;
+        }
+        else
+        {
+            toUse = islandSpritePrefab;
+        }
         _environment = FindObjectOfType<GenerateEnvironment>();
         var boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.size = new Vector2(islandWidth+2, islandHeight+2);
@@ -33,7 +50,14 @@ public class IslandGenerator : MonoBehaviour
         GenerateFloor();
         islandCenterX = (this.transform.position.x + islandWidth) - 1.5f;
         islandCenterY = (this.transform.position.y + islandHeight) - 1.5f;
-        GenerateCoin();
+        if (isFort)
+        {
+            GenerateFortWalls();
+        }
+        else
+        {
+            GenerateCoin();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -53,21 +77,21 @@ public class IslandGenerator : MonoBehaviour
             //Bottom Wall
             if (Random.Range(0,100) < 20)
             {
-                InstantiateBorderDecorationTile(x, -1, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 0);
+                InstantiateBorderDecorationTile(x, -1, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 0, 5);
             }
             else
             {
-                InstantiateSpriteTile(x, -1, bottomBorderSprite[Random.Range(0, bottomBorderSprite.Length)]);
+                InstantiateSpriteTile(x, -1, bottomBorderSprite[Random.Range(0, bottomBorderSprite.Length)], 5);
             }
             
             //Top Wall
             if (Random.Range(0,100) < 20)
             {
-                InstantiateBorderDecorationTile(x, islandHeight, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 180);
+                InstantiateBorderDecorationTile(x, islandHeight, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 180, 5);
             }
             else
             {
-                InstantiateSpriteTile(x, islandHeight, topBorderSprite[Random.Range(0, topBorderSprite.Length)]);
+                InstantiateSpriteTile(x, islandHeight, topBorderSprite[Random.Range(0, topBorderSprite.Length)], 5);
             }
         }
         for (int y = 0; y < islandHeight; y++)
@@ -75,28 +99,28 @@ public class IslandGenerator : MonoBehaviour
             //Left Wall
             if (Random.Range(0,100) < 20)
             {
-                InstantiateBorderDecorationTile(-1, y, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], -90);
+                InstantiateBorderDecorationTile(-1, y, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], -90, 5);
             }
             else
             {
-                InstantiateSpriteTile(-1, y, leftBorderSprite[Random.Range(0, leftBorderSprite.Length)]);    
+                InstantiateSpriteTile(-1, y, leftBorderSprite[Random.Range(0, leftBorderSprite.Length)], 5);    
             }
             
             //Right Wall
             if (Random.Range(0,100) < 20)
             {
-                InstantiateBorderDecorationTile(islandWidth, y, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 90);  
+                InstantiateBorderDecorationTile(islandWidth, y, decorationBorderSprite[Random.Range(0, decorationBorderSprite.Length)], 90, 5);  
             }
             else
             {
-                InstantiateSpriteTile(islandWidth, y, rightBorderSprite[Random.Range(0, rightBorderSprite.Length)]); 
+                InstantiateSpriteTile(islandWidth, y, rightBorderSprite[Random.Range(0, rightBorderSprite.Length)], 5); 
             }
             
         }
-        InstantiateSpriteTile(-1, -1, BLCornerSprite); //Bottom Left
-        InstantiateSpriteTile(-1, islandHeight, ULCornerSprite); //Top left
-        InstantiateSpriteTile(islandWidth, -1, BRCornerSprite); //Bottom Right
-        InstantiateSpriteTile(islandWidth, islandHeight, URCornerSprite); //Top Right
+        InstantiateSpriteTile(-1, -1, BLCornerSprite, 5); //Bottom Left
+        InstantiateSpriteTile(-1, islandHeight, ULCornerSprite, 5); //Top left
+        InstantiateSpriteTile(islandWidth, -1, BRCornerSprite, 5); //Bottom Right
+        InstantiateSpriteTile(islandWidth, islandHeight, URCornerSprite, 5); //Top Right
     }
 
     private void GenerateFloor()
@@ -105,28 +129,53 @@ public class IslandGenerator : MonoBehaviour
         {
             for (int y = 0; y < islandWidth; y++)
             {
-                InstantiateSpriteTile(x,y, floorSprite[Random.Range(0, floorSprite.Length)]);
+                InstantiateSpriteTile(x,y, floorSprite[Random.Range(0, floorSprite.Length)], 5);
             }
         }
     }
     
-    private void InstantiateSpriteTile(int x, int y, Sprite islandSprite)
+    private void GenerateFortWalls()
     {
-            GameObject newSpriteTile = Instantiate(islandSpritePrefab, new Vector2(x, y), Quaternion.identity);
+        for (int x = 1; x < islandWidth-1; x++)
+        {
+            //Bottom Wall
+            InstantiateBorderDecorationTile(x, 0, fortWallSprite[Random.Range(0, fortWallSprite.Length)], 90, 8); 
+                
+            //Top Wall
+            InstantiateBorderDecorationTile(x, islandHeight-1, fortWallSprite[Random.Range(0, fortWallSprite.Length)], 90, 8); 
+        }
+        for (int y = 1; y < islandHeight-1; y++)
+        {
+            //Left Wall
+            InstantiateBorderDecorationTile(0, y, fortWallSprite[Random.Range(0, fortWallSprite.Length)], 0, 8);
+            
+            //Right Wall
+            InstantiateBorderDecorationTile(islandWidth-1, y, fortWallSprite[Random.Range(0, fortWallSprite.Length)], 0, 8);
+        }
+        
+        InstantiateSpriteTile(0, 0, BLFortCornerSprite, 8); //Bottom Left
+        InstantiateSpriteTile(0, islandHeight-1, ULFortCornerSprite, 8); //Top left
+        InstantiateSpriteTile(islandWidth-1, 0, BRFortCornerSprite, 8); //Bottom Right
+        InstantiateSpriteTile(islandWidth-1, islandHeight-1, URFortCornerSprite, 8); //Top Right
+    }
+    
+    private void InstantiateSpriteTile(int x, int y, Sprite islandSprite, int sortOrder)
+    {
+            GameObject newSpriteTile = Instantiate(toUse, new Vector2(x, y), Quaternion.identity);
             newSpriteTile.GetComponent<SpriteRenderer>().sprite = islandSprite;
-            newSpriteTile.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            newSpriteTile.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
             newSpriteTile.transform.SetParent(this.transform, false);
     }
     
-    private void InstantiateBorderDecorationTile(int x, int y, Sprite islandSprite, int rotation)
+    private void InstantiateBorderDecorationTile(int x, int y, Sprite islandSprite, int rotation, int sortOrder)
     {
-            GameObject newSpriteTile = Instantiate(islandSpritePrefab, new Vector2(x, y), Quaternion.identity);
+            GameObject newSpriteTile = Instantiate(toUse, new Vector2(x, y), Quaternion.identity);
             newSpriteTile.GetComponent<SpriteRenderer>().sprite = islandSprite;
-            newSpriteTile.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            newSpriteTile.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
             newSpriteTile.gameObject.transform.Rotate(0,0,rotation);
             newSpriteTile.transform.SetParent(this.transform, false);
     }
-    
+
     private void GenerateCoin()
     {
         GameObject newCoin = Instantiate(coinPrefab, new Vector2(.5f, .5f), Quaternion.identity);
@@ -135,5 +184,4 @@ public class IslandGenerator : MonoBehaviour
         newCoin.GetComponent<SpriteRenderer>().sortingOrder = 10;
         newCoin.transform.SetParent(this.transform, false);
     }
-
 }
