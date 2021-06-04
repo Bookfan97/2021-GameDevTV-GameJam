@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] private Image titleImage;
     public ToggleClass Toggles;
     public MainMenuClass MainMenu;
     public OptionsMenuClass OptionsMenu;
@@ -155,6 +156,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (MainMenu.levelToLoad != "")
         {
+            titleImage.gameObject.SetActive(false);
             StartCoroutine(LoadSceneAsync(MainMenu.levelToLoad));
         }
     }
@@ -164,6 +166,7 @@ public class MainMenuManager : MonoBehaviour
         if (MainMenu.optionsScreen.activeInHierarchy == false)
         {
             MainMenu.optionsScreen.SetActive(true);
+            titleImage.gameObject.SetActive(false);
         }
     }
 
@@ -171,6 +174,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (MainMenu.optionsScreen.activeInHierarchy)
         {
+            titleImage.gameObject.SetActive(true);
             MainMenu.optionsScreen.SetActive(false);
         }
     }
