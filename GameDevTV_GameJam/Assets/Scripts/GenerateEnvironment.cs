@@ -12,6 +12,7 @@ public class GenerateEnvironment : MonoBehaviour
     [SerializeField] private GameObject borderPrefab;
     [SerializeField] private Sprite[] borderSprites;
     [SerializeField] private GameObject islandPrefab;
+    [SerializeField] private GameObject rockPrefab;
     [SerializeField] private GameObject fortPrefab;
     [SerializeField] Object enemyPrefab;
     [SerializeField] private int amountOfEnemies;
@@ -131,9 +132,20 @@ public class GenerateEnvironment : MonoBehaviour
                 {
                     InstantiateIsland(x, y);
                 }
+                else if (Random.Range(0, 1000) < 5)
+                {
+                    InstantiateRock(x, y);
+                }
             }
         }
         InstantiateFort();
+    }
+
+    private void InstantiateRock(int x, int y)
+    {
+        GameObject newIsland = Instantiate(rockPrefab, new Vector2(x, y), Quaternion.identity);
+        newIsland.transform.parent = this.transform;
+        newIsland.transform.position = new Vector3(x, y, 0);
     }
 
     private void InstantiateFort()

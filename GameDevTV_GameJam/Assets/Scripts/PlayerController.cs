@@ -39,19 +39,10 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "EnemyBullet")
         {
             Damage();
-
-            if (manager.lives <= 0)
-            {
-                canFire = false;
-                manager.gameOver = true;
-                gameOver.transform.GetChild(0).gameObject.SetActive(true);
-                gameOver.GetComponent<GameOver>().GameIsOver();
-                Time.timeScale = 0.0f;
-            }
         }
     }
 
-    private void Damage()
+    public void Damage()
     {
         if (invincibleCounter <= 0)
         {
@@ -60,6 +51,14 @@ public class PlayerController : MonoBehaviour
             this.gameObject.tag = "Untagged";
             sr.color= new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
             manager.RemoveLivesCount();
+            if (manager.lives <= 0)
+            {
+                canFire = false;
+                manager.gameOver = true;
+                gameOver.transform.GetChild(0).gameObject.SetActive(true);
+                gameOver.GetComponent<GameOver>().GameIsOver();
+                Time.timeScale = 0.0f;
+            }
         }
     }
 
