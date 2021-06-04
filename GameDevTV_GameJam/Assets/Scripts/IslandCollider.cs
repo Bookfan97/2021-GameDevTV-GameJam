@@ -24,6 +24,8 @@ public class IslandCollider : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        env = FindObjectOfType<GenerateEnvironment>();
+
         //Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {

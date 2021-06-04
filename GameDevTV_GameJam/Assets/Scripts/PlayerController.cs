@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private Camera camera;
     private float cannonOffsetX, cannonOffsetY;
     public bool canFire;
-    
+    public bool isDead = false;
+
     void Start()
     {
         //Initialize Components
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent <SpriteRenderer>();
         camera = FindObjectOfType<Camera>();
         canFire = true;
+        isDead = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,41 +55,48 @@ public class PlayerController : MonoBehaviour
             manager.RemoveLivesCount();
             if (manager.lives <= 0)
             {
+                //Time.timeScale = 0.0f;
+                isDead = true;
                 canFire = false;
                 manager.gameOver = true;
                 gameOver.transform.GetChild(0).gameObject.SetActive(true);
                 gameOver.GetComponent<GameOver>().GameIsOver();
-                Time.timeScale = 0.0f;
             }
         }
     }
 
     void Update()
     {
-        //Get Input
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-     
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        
-        Vector2 direction = new Vector2(transform.position.x - mousePosition.x, transform.position.y - mousePosition.y);
-        if (Input.GetButtonDown("Fire1") && canFire)
-        { 
-            Fire(-direction);
-        }
-        
-        if(invincibleCounter>0)
+        if (isDead)
         {
-            invincibleCounter -= Time.deltaTime;
-            if(invincibleCounter<=0)
-            {
-                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
-                this.gameObject.tag = "Player";
-                canFire = true;
-            }
+            canFire = false;
         }
+        
+            //Get Input
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+
+            Vector2 direction = new Vector2(transform.position.x - mousePosition.x,
+                transform.position.y - mousePosition.y);
+            if (Input.GetButtonDown("Fire1") && canFire)
+            {
+                Fire(-direction);
+            }
+
+            if (invincibleCounter > 0)
+            {
+                invincibleCounter -= Time.deltaTime;
+                if (invincibleCounter <= 0)
+                {
+                    sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+                    this.gameObject.tag = "Player";
+                    canFire = true;
+                }
+            }
     }
 
     void FixedUpdate()

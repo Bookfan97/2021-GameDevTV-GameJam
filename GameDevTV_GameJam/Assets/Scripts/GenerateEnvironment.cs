@@ -158,9 +158,9 @@ public class GenerateEnvironment : MonoBehaviour
 
     public void InstantiateIsland(int x, int y)
     {
+        GenerateEnvironment env = FindObjectOfType<GenerateEnvironment>();
         int counter = 0;
         bool valid = CanSpawn(x, y);
-        Debug.Log("Island #" + counter + ": " + valid);
         while (!valid && counter < 10)
         {
             valid = CanSpawn(Random.Range(1, floorX - 1), Random.Range(1, floorY - 1));
@@ -170,7 +170,7 @@ public class GenerateEnvironment : MonoBehaviour
         if (valid)
         {
             GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity);
-            newIsland.transform.parent = this.transform;
+            newIsland.transform.parent = env.transform;
             newIsland.transform.position = new Vector3(x, y, 0);
             BoxCollider2D col = newIsland.GetComponent<BoxCollider2D>();
             gameManager.AddIslandCount();

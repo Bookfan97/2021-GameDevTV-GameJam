@@ -101,9 +101,10 @@ public class GameManager : MonoBehaviour
         maxEnemyCount = 3;
         lives = 3;
         gameOver = false;
-        
+        //Destroy(env);
+        //env = new GenerateEnvironment();
     }
-
+ 
     public void DepositLocalCoin()
     {
         totalCoinCount += localCoinCount;

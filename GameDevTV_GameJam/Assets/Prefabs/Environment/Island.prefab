@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5d6874671809441af78bae5dbf1a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFort: 0
   islandCenterX: 0
   islandCenterY: 0
   islandWidth: 2
   islandHeight: 2
   coinPrefab: {fileID: 1502187281303722655, guid: 0c29e097e5e14c54289094d57bbdf88a, type: 3}
   islandSpritePrefab: {fileID: 5639452147430563482, guid: ae69735c6044b404696007e4ba879e3d, type: 3}
+  fortSpritePrefab: {fileID: 0}
   floorSprite:
   - {fileID: 21300000, guid: da58d4e94f05ce544922a7daabe643ff, type: 3}
   - {fileID: 21300000, guid: 4d1f511a2c76dda4388cee77072d1905, type: 3}
@@ -73,10 +75,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d579a70ba30dd0941bd77e42d43b5bce, type: 3}
   - {fileID: 21300000, guid: e64bb6ddfe6354645a2658d765c7e613, type: 3}
   - {fileID: 21300000, guid: e21e984872267ca4582950e0fbf80f4d, type: 3}
+  fortWallSprite: []
   URCornerSprite: {fileID: 21300000, guid: 9b9e1829c3a361c41a30316690d60530, type: 3}
   BRCornerSprite: {fileID: 21300000, guid: 2a4974446868276419b5b2a90b1e884c, type: 3}
   ULCornerSprite: {fileID: 21300000, guid: 98788f2a891b0834189ab05270348212, type: 3}
   BLCornerSprite: {fileID: 21300000, guid: a8731211ccd3b584282fb6c900020e26, type: 3}
+  URFortCornerSprite: {fileID: 0}
+  BRFortCornerSprite: {fileID: 0}
+  ULFortCornerSprite: {fileID: 0}
+  BLFortCornerSprite: {fileID: 0}
 --- !u!61 &3725656634519052414
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,3 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b7164f05cc810419658bbb9f9b8e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mist: {fileID: 0}
