@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private PlayerController player;
     private float initalMoveSpeed;
     public bool gameOver = false;
+    public bool isPaused = false;
     
     private void Awake()
     {
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameOver == false)
+        if (gameOver == false && isPaused == false)
         {
             if (SceneManager.GetActiveScene().name != "MainMenu")
             {

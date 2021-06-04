@@ -13,11 +13,14 @@ public class PauseMenuManger : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingBar;
     [SerializeField] private Text loadingText;
+    [SerializeField] private GameObject InGameUI;
     private bool isPaused = false;
     private PlayerController player;
+    private GameManager manager;
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<GameManager>();
         player = FindObjectOfType<PlayerController>();
         loadingScreen.SetActive(false);
         pauseMenu.SetActive(false);
@@ -39,16 +42,20 @@ public class PauseMenuManger : MonoBehaviour
     {
         if (!isPaused)
         {
+            InGameUI.SetActive(false);
             player.canFire = false;
             pauseMenu.SetActive(true);
             isPaused = true;
+            manager.isPaused = true;
             Time.timeScale = 0.0f;
         }
         else if (isPaused)
         {
+            InGameUI.SetActive(true);
             player.canFire = true;
             pauseMenu.SetActive(false);
             isPaused = false;
+            manager.isPaused = true;
             Time.timeScale = 1.0f;
         }
     }
