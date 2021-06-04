@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private float initalMoveSpeed;
     public bool gameOver = false;
     public bool isPaused = false;
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
     
     private void Awake()
     {
@@ -47,7 +50,8 @@ public class GameManager : MonoBehaviour
         env = FindObjectOfType<GenerateEnvironment>();
         ResetCounters();
         initalMoveSpeed = player.moveSpeed;
-        
+        cursorTexture.width *= 10;
+        cursorTexture.height *= 10; 
         //UI
         CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
         ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
@@ -62,6 +66,8 @@ public class GameManager : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name != "MainMenu")
             {
+                Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+                
                 CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
                 ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
                 Lives[2] = GameObject.Find("3Lives");
@@ -77,6 +83,10 @@ public class GameManager : MonoBehaviour
                     env.SpawnEnemy(maxEnemyCount - enemyCount);
                 }
             }
+        }
+        else
+        {
+            Cursor.SetCursor(null, Vector2.zero, cursorMode);
         }
     }
 
@@ -119,6 +129,10 @@ public class GameManager : MonoBehaviour
         if (localCoinCount % 5 == 1)
         {
             player.moveSpeed = (player.moveSpeed - GetLocalCoinCount() % 2);
+            if (player.moveSpeed < 1.0f)
+            {
+                player.moveSpeed = 0.5f;
+            }
         }
         if ((localCoinCount + totalCoinCount) % 5 == 1)
         {

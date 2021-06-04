@@ -14,8 +14,8 @@ public class EnemyController : MonoBehaviour
     public bool aggro = false, canFire = false;
     public Vector3 targetPosition;
     public float attackCounter, moveCounter;
-    public float waitAfterAttack = 3, waitToMove = 3, minDistance = 2, maxDistance = 5;
-    public int batAttackSpeed = 5;
+    public float waitAfterAttack = 3, waitToMove = 3, minDistance = 2, maxDistance = 8;
+    public int attackSpeed = 5;
     public float patrolTest = 0;
     private GenerateEnvironment env;
     private GameManager manager;
@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
 
     private void MoveToPosition()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, batAttackSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, attackSpeed * Time.deltaTime);
         Vector3 dir = this.transform.position - targetPosition;
         int angle = (int) (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
         transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);

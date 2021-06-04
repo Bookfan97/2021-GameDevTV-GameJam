@@ -42,20 +42,20 @@ public class PauseMenuManger : MonoBehaviour
     {
         if (!isPaused)
         {
+            manager.isPaused = true;
             InGameUI.SetActive(false);
             player.canFire = false;
             pauseMenu.SetActive(true);
             isPaused = true;
-            manager.isPaused = true;
             Time.timeScale = 0.0f;
         }
         else if (isPaused)
         {
+            manager.isPaused = false;
             InGameUI.SetActive(true);
             player.canFire = true;
             pauseMenu.SetActive(false);
             isPaused = false;
-            manager.isPaused = true;
             Time.timeScale = 1.0f;
         }
     }

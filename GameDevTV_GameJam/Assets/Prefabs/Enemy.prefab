@@ -158,8 +158,8 @@ MonoBehaviour:
   waitAfterAttack: 3
   waitToMove: 3
   minDistance: 2
-  maxDistance: 5
-  batAttackSpeed: 5
+  maxDistance: 8
+  attackSpeed: 5
   patrolTest: 0
   needNewPosition: 0
 --- !u!114 &2784265482561092517
