@@ -14,9 +14,11 @@ public class PauseMenuManger : MonoBehaviour
     [SerializeField] private Slider loadingBar;
     [SerializeField] private Text loadingText;
     private bool isPaused = false;
+    private PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<PlayerController>();
         loadingScreen.SetActive(false);
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
@@ -37,12 +39,14 @@ public class PauseMenuManger : MonoBehaviour
     {
         if (!isPaused)
         {
+            player.canFire = false;
             pauseMenu.SetActive(true);
             isPaused = true;
             Time.timeScale = 0.0f;
         }
         else if (isPaused)
         {
+            player.canFire = true;
             pauseMenu.SetActive(false);
             isPaused = false;
             Time.timeScale = 1.0f;

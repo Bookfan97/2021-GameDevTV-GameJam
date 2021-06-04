@@ -43,3 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c60f9ea4b2f0b4a980a5820744e793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoinsNum: {fileID: 0}
+  ScoreNum: {fileID: 0}
+  Lives:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  aliveSprite: {fileID: 21300000, guid: eccebe5161d1d70468e0c6c04572ebf6, type: 3}
+  deadSprite: {fileID: 21300000, guid: 4a00e93525806ad4b90a73c559d96476, type: 3}
+  localCoinCount: 0
+  totalCoinCount: 0
+  islandCounter: 0
+  enemyCount: 0
+  maxEnemyCount: 3
+  totalEnemyKilled: 0
+  lives: 3

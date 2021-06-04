@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1045631403105953526}
   - component: {fileID: 1045631403105953527}
   - component: {fileID: 1045631403105953521}
+  - component: {fileID: 2784265482561092517}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -161,6 +162,25 @@ MonoBehaviour:
   batAttackSpeed: 5
   patrolTest: 0
   needNewPosition: 0
+--- !u!114 &2784265482561092517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045631403105953514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f8f8c6008abb94eaefde329dfcd593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 60c1568cd083d7d4ab7cf906669ad8ff, type: 3}
+  - {fileID: 21300000, guid: bc38a11c4de58a5498783f126896277c, type: 3}
+  - {fileID: 21300000, guid: 18e827a80c46d754198497c6b6a478cc, type: 3}
+  - {fileID: 21300000, guid: e42117f383b23364db248829cbae8628, type: 3}
+  - {fileID: 21300000, guid: 3ffced97e3efaee48b1848740be83e0a, type: 3}
+  - {fileID: 21300000, guid: 69ba9541d007c3e4facfd73b39729434, type: 3}
 --- !u!1 &6196384787668149289
 GameObject:
   m_ObjectHideFlags: 0

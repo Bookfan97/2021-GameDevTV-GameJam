@@ -12,32 +12,54 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject cannonBall;
     [SerializeField] private float projectileForce = 20f;
     [SerializeField] private GameObject cannon = null;
+    [SerializeField] private GameObject gameOver;
+    [SerializeField] float invincibleLength=3;
+    private float invincibleCounter;
     private Rigidbody2D playerRb, cnRB;
     private SpriteRenderer sr;
     private GameManager manager;
     private Vector2 movement, mousePos;
     private Camera camera;
     private float cannonOffsetX, cannonOffsetY;
+    public bool canFire;
     
     void Start()
     {
         //Initialize Components
+        gameOver = GameObject.Find("GameOver");
         manager = FindObjectOfType<GameManager>();
         playerRb = GetComponent<Rigidbody2D>();
         sr = GetComponent <SpriteRenderer>();
         camera = FindObjectOfType<Camera>();
+        canFire = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "EnemyBullet")
         {
-            manager.RemoveLivesCount();
+            Damage();
 
             if (manager.lives <= 0)
             {
-                Destroy(this.gameObject);
+                canFire = false;
+                manager.gameOver = true;
+                gameOver.transform.GetChild(0).gameObject.SetActive(true);
+                gameOver.GetComponent<GameOver>().GameIsOver();
+                Time.timeScale = 0.0f;
             }
+        }
+    }
+
+    private void Damage()
+    {
+        if (invincibleCounter <= 0)
+        {
+            canFire = false;
+            invincibleCounter = invincibleLength; 
+            this.gameObject.tag = "Untagged";
+            sr.color= new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
+            manager.RemoveLivesCount();
         }
     }
 
@@ -52,9 +74,20 @@ public class PlayerController : MonoBehaviour
 
         
         Vector2 direction = new Vector2(transform.position.x - mousePosition.x, transform.position.y - mousePosition.y);
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && canFire)
         { 
             Fire(-direction);
+        }
+        
+        if(invincibleCounter>0)
+        {
+            invincibleCounter -= Time.deltaTime;
+            if(invincibleCounter<=0)
+            {
+                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+                this.gameObject.tag = "Player";
+                canFire = true;
+            }
         }
     }
 

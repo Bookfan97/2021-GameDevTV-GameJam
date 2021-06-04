@@ -1,20 +1,44 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private TMP_Text CoinsNum;
+    [SerializeField] private TMP_Text ScoreNum;
+    [SerializeField] private GameObject[] Lives = new GameObject[3];
+    [SerializeField] private Sprite aliveSprite;
+    [SerializeField] private Sprite deadSprite;
     public int localCoinCount;
     public int totalCoinCount;
     public int islandCounter;
     public int enemyCount;
     public int maxEnemyCount = 3;
-    public int lives = 6;
+    public int totalEnemyKilled;
+    public int lives = 3;
     private GenerateEnvironment env;
     private PlayerController player;
     private float initalMoveSpeed;
+    public bool gameOver = false;
+    
+    private void Awake()
+    {
+        int gameHandlerCount = FindObjectsOfType<GameManager>().Length;
+        if (gameHandlerCount > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,21 +46,62 @@ public class GameManager : MonoBehaviour
         env = FindObjectOfType<GenerateEnvironment>();
         ResetCounters();
         initalMoveSpeed = player.moveSpeed;
+        
+        //UI
+        CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
+        ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
+        Lives[2] = GameObject.Find("3Lives");
+        Lives[1] = GameObject.Find("2Lives");
+        Lives[0] = GameObject.Find("1Lives");
     }
 
     private void Update()
     {
-        if (enemyCount < maxEnemyCount)
+        if (gameOver == false)
         {
-            env.SpawnEnemy(maxEnemyCount - enemyCount);
+            if (SceneManager.GetActiveScene().name != "MainMenu")
+            {
+                CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
+                ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
+                Lives[2] = GameObject.Find("3Lives");
+                Lives[1] = GameObject.Find("2Lives");
+                Lives[0] = GameObject.Find("1Lives");
+
+                ScoreNum.text = PlayerScore().ToString();
+                CoinsNum.text = localCoinCount.ToString();
+                UpdateLivesUI();
+
+                if (enemyCount < maxEnemyCount)
+                {
+                    env.SpawnEnemy(maxEnemyCount - enemyCount);
+                }
+            }
+        }
+    }
+
+    private void UpdateLivesUI()
+    {
+        for (int i = 0; i < lives; i++)
+        {
+            Lives[i].SetActive(true);
+            Lives[i].GetComponent<Image>().sprite = aliveSprite;
+        }
+
+        for (int i = lives; i < Lives.Length; i++)
+        {
+            Lives[i].GetComponent<Image>().sprite = deadSprite;
         }
     }
 
     private void ResetCounters()
     {
         localCoinCount = 0;
+        totalCoinCount = 0;
+        totalEnemyKilled = 0;
         maxEnemyCount = 3;
-        lives = 6;
+        lives = 3;
+        gameOver = false;
+        
     }
 
     public void DepositLocalCoin()
@@ -83,6 +148,7 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemyCount()
     {
         enemyCount--;
+        totalEnemyKilled++;
     }
     
     public void RemoveLivesCount()
@@ -92,11 +158,11 @@ public class GameManager : MonoBehaviour
 
     public void resetGame()
     {
-        throw new NotImplementedException();
+        ResetCounters();
     }
 
     public int PlayerScore()
     {
-        throw new NotImplementedException();
+        return totalCoinCount * 5 + totalEnemyKilled;
     }
 }
