@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - EnemyBullet
+  - Mist
   layers:
   - Default
   - TransparentFX

@@ -76,13 +76,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e64bb6ddfe6354645a2658d765c7e613, type: 3}
   - {fileID: 21300000, guid: e21e984872267ca4582950e0fbf80f4d, type: 3}
   fortWallSprite:
-  - {fileID: 21300000, guid: f9ae994943abf5a4f859c2b5d29a7a98, type: 3}
-  - {fileID: 21300000, guid: 0c997c3bfad2acf4ab81f4e351671945, type: 3}
-  - {fileID: 21300000, guid: 49d10f0cc3a826c47b56a8e30d27a9f5, type: 3}
-  - {fileID: 21300000, guid: 3a293c3c59bb4a240879ee5f425778a5, type: 3}
-  - {fileID: 21300000, guid: ee393301031f065458b0bd55f4dbd8cc, type: 3}
-  - {fileID: 21300000, guid: 21af6cfdb5f3e864ca988cfbc266c7dd, type: 3}
+  - {fileID: 21300000, guid: ca49d70995f5d8a41aa78829e8c681f2, type: 3}
   - {fileID: 21300000, guid: 7d3bffb9203558b4c89023c43ca71d06, type: 3}
+  - {fileID: 21300000, guid: 0c997c3bfad2acf4ab81f4e351671945, type: 3}
+  - {fileID: 21300000, guid: ee393301031f065458b0bd55f4dbd8cc, type: 3}
+  - {fileID: 21300000, guid: 49d10f0cc3a826c47b56a8e30d27a9f5, type: 3}
   URCornerSprite: {fileID: 21300000, guid: 9b9e1829c3a361c41a30316690d60530, type: 3}
   BRCornerSprite: {fileID: 21300000, guid: 2a4974446868276419b5b2a90b1e884c, type: 3}
   ULCornerSprite: {fileID: 21300000, guid: 98788f2a891b0834189ab05270348212, type: 3}
