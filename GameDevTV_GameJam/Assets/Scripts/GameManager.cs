@@ -89,4 +89,14 @@ public class GameManager : MonoBehaviour
     {
         lives--;
     }
+
+    public void resetGame()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int PlayerScore()
+    {
+        throw new NotImplementedException();
+    }
 }
