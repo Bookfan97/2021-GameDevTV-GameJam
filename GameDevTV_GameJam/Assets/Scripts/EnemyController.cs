@@ -64,9 +64,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Bullet")
+        if (other.gameObject.tag == "Bullet" || other.gameObject.tag == "Mist")
         {
-            Instantiate(explode, this.transform.position, Quaternion.identity); 
+            if (other.gameObject.tag == "Bullet")
+            {
+                Instantiate(explode, this.transform.position, Quaternion.identity);
+            }
             manager.RemoveEnemyCount();
             env.SpawnEnemy(1);
             Destroy(other.gameObject);

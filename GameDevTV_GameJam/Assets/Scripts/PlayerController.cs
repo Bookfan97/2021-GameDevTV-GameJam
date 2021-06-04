@@ -72,19 +72,17 @@ public class PlayerController : MonoBehaviour
             canFire = false;
         }
         
-            //Get Input
-            movement.x = Input.GetAxisRaw("Horizontal");
-            movement.y = Input.GetAxisRaw("Vertical");
-
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-
-            Vector2 direction = new Vector2(transform.position.x - mousePosition.x,
-                transform.position.y - mousePosition.y).normalized;
+        //Get Input
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 playerPos = firePoint.position;
+        Vector2 offset = new Vector2(mousePosition.x - playerPos.x, mousePosition.y - playerPos.y);
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
+        firePoint.rotation = Quaternion.Euler(0,0,angle);
             if (Input.GetButtonDown("Fire1") && canFire)
             {
-                Fire(-direction);
+                Fire();
             }
 
             if (invincibleCounter > 0)
@@ -117,12 +115,9 @@ public class PlayerController : MonoBehaviour
     }
     
     //Fires Projectiles
-    private void Fire(Vector2 direction)
+    private void Fire()
     {
-        
-        GameObject projectile = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
-        Rigidbody2D rbProj = projectile.GetComponent<Rigidbody2D>();
-        //projectile.transform.position = firePoint.position;
-        rbProj.AddForce(direction * projectileForce, ForceMode2D.Impulse);
+  
+        Instantiate(cannonBall, firePoint.position, firePoint.rotation);
     }
 }
