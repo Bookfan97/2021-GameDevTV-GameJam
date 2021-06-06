@@ -24,17 +24,8 @@ public class IslandCollider : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        env = FindObjectOfType<GenerateEnvironment>();
-
-        //Debug.Log("COLLISION" +collision.gameObject.tag+", "+ this.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            var children = this.gameObject.transform.parent.GetComponentsInChildren<IslandCollider>();
-            //Debug.Log(children.Length);
-            /*foreach (var child in children)
-            {
-                child.GetComponent<IslandCollider>().enabled = false;
-            }*/
                 _gameManager.AddCoinCount();
                 _gameManager.RemoveIslandCount();
                 Instantiate(mist, this.gameObject.transform.parent.position, Quaternion.identity);
@@ -43,11 +34,11 @@ public class IslandCollider : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<EnemyController>().targetPosition = new Vector3(Random.Range(1,env.floorX),Random.Range(1,env.floorY),0);
+            collision.gameObject.GetComponent<EnemyController>().NewRandomPoint();
         }
         if (collision.gameObject.CompareTag("Island") || collision.gameObject.GetComponentsInChildren<IslandCollider>().Length > 0)
         {
-            //Debug.Log("Island overlap");
+            Debug.Log("Island overlap");
             Destroy(collision.gameObject);
         }
     }

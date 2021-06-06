@@ -960,6 +960,10 @@ PrefabInstance:
       propertyPath: titleImage
       value: 
       objectReference: {fileID: 1955294068}
+    - target: {fileID: 1481793397110723800, guid: c0a3adc4e4296f44c83e76bb83052d03, type: 3}
+      propertyPath: artAttr
+      value: 
+      objectReference: {fileID: 141065834}
     - target: {fileID: 1481793397110723801, guid: c0a3adc4e4296f44c83e76bb83052d03, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1282,6 +1286,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8815061121519906810, guid: c0a3adc4e4296f44c83e76bb83052d03, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815061121519906811, guid: c0a3adc4e4296f44c83e76bb83052d03, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

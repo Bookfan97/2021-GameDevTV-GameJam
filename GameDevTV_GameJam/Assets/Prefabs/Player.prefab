@@ -167,8 +167,16 @@ MonoBehaviour:
   moveSpeed: 5
   firePoint: {fileID: 5611326020610896866}
   cannonBall: {fileID: 1724094419796212142, guid: fb4f3bceb278f4b42ba07d78e19e2daa, type: 3}
+  childSprites:
+  - {fileID: 7184725878840670399}
+  - {fileID: 7184725879407703153}
+  - {fileID: 7184725879112698434}
+  - {fileID: 7184725878333983620}
   projectileForce: 5
-  cannon: {fileID: 0}
+  gameOver: {fileID: 0}
+  invincibleLength: 3
+  canFire: 0
+  isDead: 0
 --- !u!212 &7184725878526186393
 SpriteRenderer:
   m_ObjectHideFlags: 0

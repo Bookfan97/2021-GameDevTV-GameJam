@@ -124,9 +124,9 @@ public class GenerateEnvironment : MonoBehaviour
     private void GenerateObjects()
     {
         int count = 0;
-        for (int x = 1; x < floorX - 6; x++)
+        for (int x = 1; x < floorX - 10; x++)
         {
-            for (int y = 1; y < floorY - 6; y++)
+            for (int y = 1; y < floorY - 10; y++)
             {
                 if (Random.Range(0, 1000) < 5)
                 {
@@ -172,6 +172,7 @@ public class GenerateEnvironment : MonoBehaviour
             GameObject newIsland = Instantiate(islandPrefab, new Vector2(x, y), Quaternion.identity);
             newIsland.transform.parent = env.transform;
             newIsland.transform.position = new Vector3(x, y, 0);
+            newIsland.tag = "Island";
             BoxCollider2D col = newIsland.GetComponent<BoxCollider2D>();
             gameManager.AddIslandCount();
         }
@@ -211,7 +212,6 @@ public class GenerateEnvironment : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
 

@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float moveSpeed = 5f;
     [SerializeField] Transform firePoint;
     [SerializeField] private GameObject cannonBall;
+    [SerializeField] private GameObject[] childSprites;
     [SerializeField] private float projectileForce = 20f;
-    [SerializeField] private GameObject cannon = null;
     [SerializeField] private GameObject gameOver;
     [SerializeField] float invincibleLength=3;
     private float invincibleCounter;
@@ -52,6 +52,14 @@ public class PlayerController : MonoBehaviour
             invincibleCounter = invincibleLength; 
             this.gameObject.tag = "Untagged";
             sr.color= new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
+            foreach (var child in childSprites)
+            {
+                child.GetComponent<SpriteRenderer>().color = new Color(
+                    child.GetComponent<SpriteRenderer>().color.r, 
+                    child.GetComponent<SpriteRenderer>().color.g, 
+                    child.GetComponent<SpriteRenderer>().color.b, 
+                    0.5f);
+            }
             manager.RemoveLivesCount();
             if (manager.lives <= 0)
             {
@@ -91,6 +99,14 @@ public class PlayerController : MonoBehaviour
                 if (invincibleCounter <= 0)
                 {
                     sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+                    foreach (var child in childSprites)
+                    {
+                        child.GetComponent<SpriteRenderer>().color = new Color(
+                            child.GetComponent<SpriteRenderer>().color.r, 
+                            child.GetComponent<SpriteRenderer>().color.g, 
+                            child.GetComponent<SpriteRenderer>().color.b, 
+                            1f);
+                    }
                     this.gameObject.tag = "Player";
                     canFire = true;
                 }
@@ -117,7 +133,6 @@ public class PlayerController : MonoBehaviour
     //Fires Projectiles
     private void Fire()
     {
-  
         Instantiate(cannonBall, firePoint.position, firePoint.rotation);
     }
 }

@@ -9,6 +9,7 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private bool isMainMenu = true;
     [SerializeField] private Image titleImage;
+    [SerializeField] private Text artAttr;
     public ToggleClass Toggles;
     public MainMenuClass MainMenu;
     public OptionsMenuClass OptionsMenu;
@@ -158,6 +159,7 @@ public class MainMenuManager : MonoBehaviour
         if (MainMenu.levelToLoad != "")
         {
             titleImage.gameObject.SetActive(false);
+            artAttr.gameObject.SetActive(false);
             StartCoroutine(LoadSceneAsync(MainMenu.levelToLoad));
         }
     }

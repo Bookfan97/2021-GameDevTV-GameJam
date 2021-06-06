@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Bullet" || other.gameObject.tag == "Mist")
+        if (other.gameObject.tag == "Bullet")
         {
             if (other.gameObject.tag == "Bullet")
             {
@@ -75,6 +75,15 @@ public class EnemyController : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
+        else if (other.gameObject.tag == "Island" || other.gameObject.tag == "Mist")
+        {
+            NewRandomPoint();
+        }
+    }
+
+    public void NewRandomPoint()
+    {
+        targetPosition = new Vector3(Random.Range(3, env.floorX - 2), Random.Range(3, env.floorY - 2), 0);
     }
 
     private void CheckDistanceToPlayer()
@@ -117,18 +126,23 @@ public class EnemyController : MonoBehaviour
             }
             else if(!aggro)
             {
-                targetPosition = new Vector3(Random.Range(1,env.floorX),Random.Range(1,env.floorY),0);
+               NewRandomPoint();
             }
         }
     }
     
     private void Fire()
     {
-        Vector2 direction = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
+        Vector2 offset = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
+        firePoint.rotation = Quaternion.Euler(0,0,angle);
+        /*Vector2 direction = player.gameObject.transform.position;//new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
         GameObject projectile = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
         projectile.tag = "EnemyBullet";
         Rigidbody2D rbProj = projectile.GetComponent<Rigidbody2D>();
-        rbProj.AddForce(-direction * projectileForce, ForceMode2D.Impulse);
+        rbProj.AddForce(-direction * projectileForce, ForceMode2D.Impulse);*/
+        var proj = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
+        proj.tag = "EnemyBullet";
         attackCounter = waitAfterAttack;
     }
 }
