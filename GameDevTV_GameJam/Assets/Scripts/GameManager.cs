@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text CoinsNum;
     [SerializeField] private TMP_Text ScoreNum;
+    [SerializeField] private TMP_Text SpeedNum;
     [SerializeField] private GameObject[] Lives = new GameObject[3];
     [SerializeField] private Sprite aliveSprite;
     [SerializeField] private Sprite deadSprite;
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
         //UI
         CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
         ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
+        SpeedNum = GameObject.Find("SpeedNum").GetComponent<TMP_Text>();
         Lives[2] = GameObject.Find("3Lives");
         Lives[1] = GameObject.Find("2Lives");
         Lives[0] = GameObject.Find("1Lives");
@@ -70,12 +72,14 @@ public class GameManager : MonoBehaviour
                 
                 CoinsNum = GameObject.Find("CoinAmountText").GetComponent<TMP_Text>();
                 ScoreNum = GameObject.Find("ScoreNum").GetComponent<TMP_Text>();
+                SpeedNum = GameObject.Find("SpeedNum").GetComponent<TMP_Text>();
                 Lives[2] = GameObject.Find("3Lives");
                 Lives[1] = GameObject.Find("2Lives");
                 Lives[0] = GameObject.Find("1Lives");
 
                 ScoreNum.text = PlayerScore().ToString();
                 CoinsNum.text = localCoinCount.ToString();
+                SpeedNum.text = player.moveSpeed.ToString();
                 UpdateLivesUI();
 
                 if (enemyCount < maxEnemyCount)
